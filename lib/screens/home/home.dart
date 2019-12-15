@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:meetup/screens/authenticate/signin.dart';
 import 'package:meetup/services/auth.dart';
 import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatelessWidget{
 
+  BuildContext context;
   final AuthService _authService = AuthService();
   final RxSharedPreferences prefs = RxSharedPreferences(SharedPreferences.getInstance());
 
+
+
   @override
   Widget build(BuildContext context) {
-
-
-    return Container(
-      child: Scaffold(
+    this.context = context;
+      return WillPopScope(
+        onWillPop: () async{
+          return true;
+        },
+        child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.accents[1],
@@ -37,13 +43,14 @@ class Home extends StatelessWidget{
                     print(result);
                     prefs.setString("user_uid", "");
                   }
-            },
+                },
                 icon: Icon(Icons.person),
                 label: Text('Sign Out'))
           ],
         ),
 //        body: Image.asset('assets/images/hunt_splash.png'),
       ),
+
     );
   }
 }
