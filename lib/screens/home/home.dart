@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:meetup/screens/authenticate/signin.dart';
 import 'package:meetup/services/auth.dart';
@@ -35,14 +37,19 @@ class Home extends StatelessWidget{
                 onPressed: () async {
 
                   dynamic result = await _authService.signOutUser();
-
-                  if (!result) {
-                    print('SignOut error');
-                  } else {
-                    print('SignOut success');
-                    print(result);
-                    prefs.setString("user_uid", "");
-                  }
+if(result!=null){
+  if (!result) {
+    Timer(Duration(seconds: 3), (){
+      print("Success after 3 seconds");
+      print(DateTime.now().day);
+    });
+    print('SignOut error');
+  } else {
+    print('SignOut success');
+    print(result);
+    prefs.setString("user_uid", "");
+  }
+}
                 },
                 icon: Icon(Icons.person),
                 label: Text('Sign Out'))

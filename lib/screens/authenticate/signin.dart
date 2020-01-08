@@ -96,6 +96,9 @@ Toast.show(message, context,duration: Toast.LENGTH_SHORT,gravity: Toast.BOTTOM);
                       print(email);
                       print(password);
                       _showToast('Email: '+email+'Password: '+password);
+                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                        return Home();
+                      }));
                     }),
                 size: Size(250.0, 50.0),),
             ],
@@ -103,7 +106,14 @@ Toast.show(message, context,duration: Toast.LENGTH_SHORT,gravity: Toast.BOTTOM);
         ),
       ),
     ), onWillPop: () async {
-      return await _onBackPressed();
+      dynamic result = await _onBackPressed();
+      if(result){
+        Navigator.pop(context);
+        return true;
+      }else{
+        return false;
+      }
+      
     });
   }
 }
